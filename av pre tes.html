@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LHDH Solutions – Étanchéité Paris & Plus</title>
+<meta name="description" content="LHDH Solutions, spécialiste en étanchéité. Toiture-terrasse, charpente métallique, résine, végétalisation. Devis gratuit 48h. Paris et 150 km.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root {
+  --white:   #FFFFFF;
+  --off:     #F7F8FA;
+  --light:   #EEF1F5;
+  --border:  #DDE2EA;
+  --muted:   #8A96A8;
+  --text:    #1A222E;
+  --navy:    #0F2040;
+  --blue:    #1B6FCA;
+  --blue-d:  #1458A2;
+  --blue-l:  #4A9AE8;
+  --sky:     #E8F2FC;
+  --amber:   #D97706;
+  --amber-l: #F59E0B;
+  --fh: 'Barlow Condensed', sans-serif;
+  --fb: 'Barlow', sans-serif;
+  --r: 6px;
+}
+
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--fb); color: var(--text); background: var(--white); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+svg { display: block; }
+
+/* ══════════════════════════════════════════
+   PROGRESS BAR
+══════════════════════════════════════════ */
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--amber));
+  transform-origin: left; transform: scaleX(0);
+  z-index: 300; transition: transform .1s linear;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 68px;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center;
+  padding: 0 5vw; gap: 2rem;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  margin-right: auto;
+}
+.nav-logo-text { line-height: 1.1; }
+.nav-logo-name {
+  font-family: var(--fh); font-size: 1.35rem; font-weight: 800;
+  letter-spacing: .06em; color: var(--navy);
+}
+.nav-logo-sub {
+  font-family: var(--fh); font-size: .58rem; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--muted); margin-top: -1px;
+}
+.nav-links { display: flex; align-items: center; gap: 1.6rem; list-style: none; }
+.nav-links a {
+  font-family: var(--fh); font-size: .82rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); transition: color .2s;
+}
+.nav-links a:hover { color: var(--blue); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--blue); color: var(--white) !important;
+  padding: .5rem 1.2rem; border-radius: var(--r);
+  font-family: var(--fh) !important; font-size: .82rem !important;
+  font-weight: 700 !important; letter-spacing: .08em !important;
+  transition: background .2s, transform .2s !important;
+}
+.nav-cta:hover { background: var(--blue-d) !important; transform: translateY(-1px); }
+.nav-phone {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--fh); font-size: .85rem; font-weight: 700;
+  letter-spacing: .04em; color: var(--navy);
+  padding: .4rem .8rem; border-radius: var(--r);
+  border: 1.5px solid var(--border); transition: all .2s;
+}
+.nav-phone:hover { border-color: var(--blue); color: var(--blue); }
+.burger {
+  display: none; background: none; border: none;
+  cursor: pointer; padding: 6px; flex-direction: column; gap: 5px;
+}
+.burger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--navy); border-radius: 1px; transition: all .3s;
+}
+.mobile-menu {
+  display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+  background: var(--white); z-index: 190;
+  flex-direction: column; padding: 2rem 5vw; gap: 0;
+  border-top: 1px solid var(--border);
+}
+.mobile-menu a {
+  font-family: var(--fh); font-size: 1.4rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--text);
+  padding: 1rem 0; border-bottom: 1px solid var(--border);
+  transition: color .2s;
+}
+.mobile-menu a:hover { color: var(--blue); }
+.mobile-menu .m-cta {
+  margin-top: 1.5rem; background: var(--blue); color: var(--white) !important;
+  text-align: center; border-radius: var(--r); border: none; padding: 1rem;
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  background: var(--white);
+  padding: 120px 5vw 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(27,111,202,.06) 0%, transparent 70%),
+    linear-gradient(180deg, var(--off) 0%, var(--white) 100%);
+}
+.hero-decor {
+  position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+  width: 600px; height: 600px; border-radius: 50%;
+  border: 1px solid rgba(27,111,202,.08);
+  pointer-events: none; z-index: 0;
+}
+.hero-decor::before {
+  content: '';
+  position: absolute; inset: 40px; border-radius: 50%;
+  border: 1px solid rgba(27,111,202,.06);
+}
+.hero-left { position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--sky); border: 1px solid rgba(27,111,202,.18);
+  border-radius: 2px; padding: .35rem 1rem;
+  font-family: var(--fh); font-size: .75rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--blue);
+  margin-bottom: 1.5rem;
+}
+.hero-eyebrow::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber); animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+h1 {
+  font-family: var(--fh); font-weight: 800; line-height: 1.02;
+  letter-spacing: -.01em; text-transform: uppercase;
+  color: var(--navy); font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  margin-bottom: 1.4rem;
+}
+h1 em { color: var(--blue); font-style: normal; }
+.hero-desc {
+  font-size: 1.05rem; font-weight: 300; line-height: 1.8;
+  color: #4A5568; max-width: 480px; margin-bottom: 2rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: .82rem 1.8rem; border-radius: var(--r);
+  font-family: var(--fh); font-size: .95rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  transition: all .2s; cursor: pointer; border: none;
+}
+.btn-primary { background: var(--blue); color: var(--white); }
+.btn-primary:hover { background: var(--blue-d); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,111,202,.25); }
+.btn-ghost { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+.hero-kpis {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-top: 1px solid var(--border); padding-top: 2rem; gap: 1rem;
+}
+.kpi-n {
+  font-family: var(--fh); font-size: 1.9rem; font-weight: 800;
+  color: var(--navy); line-height: 1;
+}
+.kpi-n sup { font-size: .95rem; color: var(--blue); }
+.kpi-l { font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.hero-right { position: relative; z-index: 1; }
+.hero-card-wrap { position: relative; }
+.hero-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 2rem; box-shadow: 0 4px 40px rgba(0,0,0,.07);
+}
+.hc-title {
+  font-family: var(--fh); font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--navy);
+  margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+}
+.hc-badges { display: flex; flex-direction: column; gap: .7rem; }
+.hc-badge {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--off); border: 1px solid var(--border);
+  border-radius: var(--r); padding: .75rem 1rem;
+  transition: border-color .2s;
+}
+.hc-badge:hover { border-color: var(--blue-l); }
+.hc-badge-icon {
+  width: 36px; height: 36px; border-radius: 6px;
+  background: var(--sky); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.hc-badge-icon svg { width: 18px; height: 18px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.hc-badge-name { font-weight: 600; font-size: .9rem; color: var(--navy); }
+.hc-badge-sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+.hero-float {
+  position: absolute; top: -18px; right: -18px;
+  background: var(--amber); color: var(--white);
+  border-radius: 8px; padding: .8rem 1.1rem;
+  box-shadow: 0 8px 24px rgba(217,119,6,.3);
+  text-align: center;
+}
+.hero-float-n { font-family: var(--fh); font-size: 1.4rem; font-weight: 800; line-height: 1; }
+.hero-float-l { font-family: var(--fh); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .85; margin-top: 1px; }
+
+/* ══════════════════════════════════════════
+   DISPONIBILITÉ BANNER
+══════════════════════════════════════════ */
+#dispo {
+  background: var(--navy); padding: 1rem 5vw;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; flex-wrap: wrap;
+}
+.dispo-txt {
+  font-family: var(--fh); font-size: 1rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.9);
+}
+.dispo-item {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r); padding: .35rem .9rem; cursor: pointer;
+  text-decoration: none; transition: background .2s;
+}
+.dispo-item:hover { background: rgba(255,255,255,.14); }
+.dispo-item svg { width: 13px; height: 13px; stroke: var(--amber-l); fill: none; stroke-width: 2.5; flex-shrink: 0; }
+.dispo-item span { font-family: var(--fh); font-size: .8rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+
+/* ══════════════════════════════════════════
+   SECTIONS COMMUNES
+══════════════════════════════════════════ */
+.sec { padding: 90px 5vw; }
+.sec-alt { background: var(--off); }
+.sec-dark { background: var(--navy); }
+.sec-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem; margin-bottom: 3.5rem; }
+.label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fh); font-size: .72rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--blue);
+  margin-bottom: .7rem;
+}
+.label::before { content: ''; width: 24px; height: 2px; background: var(--blue); }
+.label-lt { color: var(--amber-l); }
+.label-lt::before { background: var(--amber-l); }
+.sec-h {
+  font-family: var(--fh); font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 800; text-transform: uppercase; letter-spacing: .01em;
+  line-height: 1.1; color: var(--navy); margin-bottom: 1rem;
+}
+.sec-h.lt { color: var(--white); }
+.sec-p { font-size: 1rem; line-height: 1.8; color: #5A6778; max-width: 520px; }
+.sec-p.lt { color: rgba(255,255,255,.6); }
+
+/* ══════════════════════════════════════════
+   ATOUTS
+══════════════════════════════════════════ */
+.atouts-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+}
+.atout {
+  background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.8rem; transition: all .25s; position: relative; overflow: hidden;
+}
+.atout::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-l));
+  transform: scaleX(0); transform-origin: left; transition: transform .3s;
+}
+.atout:hover { border-color: rgba(27,111,202,.3); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+.atout:hover::before { transform: scaleX(1); }
+.atout-icon {
+  width: 46px; height: 46px; border-radius: 10px;
+  background: var(--sky); border: 1px solid rgba(27,111,202,.15);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem;
+}
+.atout-icon svg { width: 20px; height: 20px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.atout-t { font-family: var(--fh); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--navy); margin-bottom: .5rem; }
+.atout-d { font-size: .9rem; line-height: 1.72; color: #5A6778; }
+
+/* ══════════════════════════════════════════
+   PRESTATIONS
+══════════════════════════════════════════ */
+.prest-wrap {
+  display: grid; grid-template-columns: 240px 1fr;
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+}
+.prest-tabs { background: var(--navy); display: flex; flex-direction: column; }
+.prest-tab {
+  display: flex; align-items: center; gap: 11px;
+  padding: 1.3rem 1.4rem; cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  font-family: var(--fh); font-size: .9rem; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); transition: all .2s;
+}
+.prest-tab svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+.prest-tab:hover { color: rgba(255,255,255,.75); background: rgba(255,255,255,.04); }
+.prest-tab.on { color: var(--white); background: var(--blue); border-left: 3px solid var(--amber); }
+.prest-panel { background: var(--white); padding: 2.2rem; display: none; }
+.prest-panel.on { display: block; }
+.pp-title { font-family: var(--fh); font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--navy); margin-bottom: .25rem; }
+.pp-sub { font-size: .88rem; color: var(--blue); font-weight: 500; margin-bottom: 1.4rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--border); }
+.pp-list { display: flex; flex-direction: column; gap: .9rem; }
+.pp-item { display: flex; gap: 11px; }
+.pp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-top: 7px; flex-shrink: 0; }
+.pp-name { font-weight: 600; font-size: .97rem; color: var(--navy); margin-bottom: 2px; }
+.pp-desc { font-size: .86rem; line-height: 1.68; color: #5A6778; }
+
+/* ══════════════════════════════════════════
+   PROCESSUS
+══════════════════════════════════════════ */
+.process-grid {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  gap: 0; position: relative; margin-top: 3rem;
+}
+.process-grid::before {
+  content: ''; position: absolute;
+  top: 27px; left: 12%; right: 12%; height: 1px;
+  background: rgba(255,255,255,.1);
+}
+.proc-step { padding: 0 .8rem; text-align: center; }
+.proc-circle {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem; position: relative; z-index: 1;
+  transition: all .25s;
+}
+.proc-step:hover .proc-circle { background: var(--blue); border-color: var(--blue-l); }
+.proc-circle svg { width: 21px; height: 21px; stroke: rgba(255,255,255,.7); fill: none; stroke-width: 2; }
+.proc-n { font-family: var(--fh); font-size: .68rem; font-weight: 700; letter-spacing: .12em; color: var(--amber-l); margin-bottom: .35rem; }
+.proc-t { font-family: var(--fh); font-size: .92rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--white); margin-bottom: .35rem; }
+.proc-d { font-size: .82rem; line-height: 1.6; color: rgba(255,255,255,.45); }
+
+/* ══════════════════════════════════════════
+   GARANTIES
+══════════════════════════════════════════ */
+.garanties-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.garantie {
+  background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.8rem; transition: all .2s;
+}
+.garantie:hover { border-color: rgba(27,111,202,.3); box-shadow: 0 6px 24px rgba(0,0,0,.07); }
+.garantie.feat { background: var(--blue); border-color: var(--blue-d); }
+.g-icon { width: 42px; height: 42px; border-radius: 8px; background: var(--sky); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.garantie.feat .g-icon { background: rgba(255,255,255,.15); }
+.g-icon svg { width: 19px; height: 19px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.garantie.feat .g-icon svg { stroke: #fff; }
+.g-t { font-family: var(--fh); font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--navy); margin-bottom: .4rem; }
+.garantie.feat .g-t { color: var(--white); }
+.g-d { font-size: .88rem; line-height: 1.72; color: #5A6778; }
+.garantie.feat .g-d { color: rgba(255,255,255,.78); }
+
+/* ══════════════════════════════════════════
+   AVIS
+══════════════════════════════════════════ */
+.avis-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; }
+.avis-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.8rem; display: flex; flex-direction: column; gap: .9rem;
+  transition: all .25s;
+}
+.avis-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.08); border-color: rgba(27,111,202,.2); }
+.avis-card.feat { background: var(--navy); border-color: var(--navy); }
+.avis-stars { font-size: 1rem; color: var(--amber); letter-spacing: 2px; }
+.avis-txt { font-size: .92rem; line-height: 1.75; color: #5A6778; flex: 1; font-style: italic; }
+.avis-card.feat .avis-txt { color: rgba(255,255,255,.65); }
+.avis-author { display: flex; align-items: center; gap: 10px; }
+.avis-av {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--sky); display: flex; align-items: center; justify-content: center;
+  font-family: var(--fh); font-size: 1rem; font-weight: 700; color: var(--blue); flex-shrink: 0;
+}
+.avis-card.feat .avis-av { background: rgba(255,255,255,.12); color: var(--white); }
+.avis-name { font-weight: 600; font-size: .9rem; color: var(--navy); }
+.avis-card.feat .avis-name { color: var(--white); }
+.avis-loc { font-size: .75rem; color: var(--muted); margin-top: 1px; }
+.avis-tag {
+  display: inline-block; font-family: var(--fh); font-size: .67rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--blue);
+  background: var(--sky); border: 1px solid rgba(27,111,202,.15);
+  padding: 3px 9px; border-radius: 3px; width: fit-content;
+}
+.avis-card.feat .avis-tag { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.15); }
+
+/* ══════════════════════════════════════════
+   CARTE ZONE
+══════════════════════════════════════════ */
+.zone-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.zone-tags { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 2.5rem; }
+.zone-tag { display: flex; align-items: center; gap: 11px; }
+.z-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.z-name { font-family: var(--fh); font-size: .98rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--white); }
+.z-detail { font-size: .83rem; color: rgba(255,255,255,.45); margin-top: 1px; }
+.zone-map {
+  background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; overflow: hidden; aspect-ratio: 1;
+}
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
+#contact { background: var(--off); padding: 90px 5vw; }
+.contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.form-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 2.4rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,.06);
+}
+.form-title { font-family: var(--fh); font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--navy); margin-bottom: .25rem; }
+.form-sub { font-size: .87rem; color: var(--muted); margin-bottom: 1.6rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--border); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-g { margin-bottom: .9rem; }
+.form-g label {
+  display: block; font-family: var(--fh); font-size: .72rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem;
+}
+.form-g input, .form-g select, .form-g textarea {
+  width: 100%; padding: .7rem .9rem;
+  border: 1.5px solid var(--border); border-radius: var(--r);
+  font-family: var(--fb); font-size: .92rem; color: var(--text);
+  background: var(--off); outline: none; transition: border-color .2s, background .2s;
+}
+.form-g input:focus, .form-g select:focus, .form-g textarea:focus {
+  border-color: var(--blue); background: var(--white);
+}
+.form-g select { cursor: pointer; }
+.form-submit {
+  width: 100%; padding: .88rem; margin-top: .4rem;
+  background: var(--blue); color: var(--white);
+  border: none; border-radius: var(--r); cursor: pointer;
+  font-family: var(--fh); font-size: 1rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  transition: background .2s, transform .2s;
+}
+.form-submit:hover { background: var(--blue-d); transform: translateY(-1px); }
+.form-note { font-size: .75rem; color: var(--muted); text-align: center; margin-top: .7rem; }
+.ci-list { display: flex; flex-direction: column; gap: 1.6rem; }
+.ci-item { display: flex; align-items: center; gap: 14px; }
+.ci-icon {
+  width: 46px; height: 46px; border-radius: 10px;
+  background: var(--sky); border: 1px solid rgba(27,111,202,.15);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ci-icon svg { width: 18px; height: 18px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.ci-l { font-family: var(--fh); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.ci-v { font-size: .97rem; font-weight: 600; color: var(--navy); }
+.ci-v a { color: var(--blue); }
+.assur-row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 2.5rem; }
+.assur-badge {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: .5rem 1rem; transition: border-color .2s;
+}
+.assur-badge:hover { border-color: var(--blue-l); }
+.assur-badge svg { width: 15px; height: 15px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.assur-badge span { font-family: var(--fh); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: var(--navy); padding: 2.8rem 5vw;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.footer-logo { display: flex; align-items: center; gap: 9px; }
+.footer-logo-name { font-family: var(--fh); font-size: 1.2rem; font-weight: 800; letter-spacing: .06em; color: var(--white); }
+.footer-logo-sub { font-family: var(--fh); font-size: .55rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+.footer-info { font-size: .78rem; color: rgba(255,255,255,.35); line-height: 1.8; }
+.footer-info a { color: rgba(255,255,255,.4); }
+.footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.footer-links a {
+  font-family: var(--fh); font-size: .75rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); transition: color .2s;
+}
+.footer-links a:hover { color: rgba(255,255,255,.8); }
+
+/* ══════════════════════════════════════════
+   FLOATING CTA
+══════════════════════════════════════════ */
+.float-cta {
+  position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 190;
+  display: flex; align-items: center; gap: 9px;
+  background: var(--amber); color: var(--white);
+  padding: .8rem 1.4rem; border-radius: var(--r);
+  font-family: var(--fh); font-size: .95rem; font-weight: 800;
+  letter-spacing: .05em; text-transform: uppercase;
+  box-shadow: 0 6px 24px rgba(217,119,6,.4);
+  animation: fp 3s ease-in-out infinite;
+}
+@keyframes fp { 0%,100%{box-shadow:0 6px 24px rgba(217,119,6,.4)} 50%{box-shadow:0 8px 36px rgba(217,119,6,.65)} }
+.float-cta:hover { background: var(--amber-l); transform: translateY(-2px); }
+.float-cta svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+/* ══════════════════════════════════════════
+   REVEAL
+══════════════════════════════════════════ */
+.r { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.r.on { opacity: 1; transform: translateY(0); }
+.r2 { transition-delay: .1s; }
+.r3 { transition-delay: .2s; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:1000px){
+  #hero { grid-template-columns: 1fr; min-height: auto; padding-top: 100px; }
+  .hero-right { display: none; }
+  .hero-kpis { grid-template-columns: repeat(2,1fr); }
+  .atouts-grid { grid-template-columns: repeat(2,1fr); }
+  .prest-wrap { grid-template-columns: 1fr; }
+  .prest-tabs { flex-direction: row; overflow-x: auto; }
+  .prest-tab { border-bottom: none; border-right: 1px solid rgba(255,255,255,.07); white-space: nowrap; }
+  .prest-tab.on { border-left: none; border-bottom: 3px solid var(--amber); }
+  .process-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-grid::before { display: none; }
+  .garanties-grid { grid-template-columns: 1fr; }
+  .zone-wrap { grid-template-columns: 1fr; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+  .avis-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:640px){
+  .nav-links { display: none; }
+  .nav-phone { display: none; }
+  .burger { display: flex; }
+  h1 { font-size: 2.5rem; }
+  .atouts-grid { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .float-cta { bottom: 1rem; right: 1rem; font-size: .82rem; padding: .7rem 1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="22" height="28" viewBox="0 0 22 28" fill="none">
+      <path d="M11 0C11 0 0 10 0 17.5C0 23.3 4.9 28 11 28C17.1 28 22 23.3 22 17.5C22 10 11 0 11 0Z" fill="url(#gn)"/>
+      <path d="M7 18C7 15.5 9 13 11 11" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+      <defs><linearGradient id="gn" x1="11" y1="0" x2="11" y2="28" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#5BC0F5"/><stop offset="100%" stop-color="#1458A2"/></linearGradient></defs>
+    </svg>
+    <div class="nav-logo-text">
+      <div class="nav-logo-name">LHDH</div>
+      <div class="nav-logo-sub">Solutions</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#atouts">Expertise</a></li>
+    <li><a href="#prestations">Prestations</a></li>
+    <li><a href="#processus">Méthode</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="tel:+33768955806" class="nav-phone">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l.56-.56a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      07 68 95 58 06
+    </a></li>
+    <li><a href="#contact" class="nav-cta">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      Devis gratuit
+    </a></li>
+  </ul>
+  <button class="burger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mmenu">
+  <a href="#atouts" onclick="toggleMenu()">Expertise</a>
+  <a href="#prestations" onclick="toggleMenu()">Prestations</a>
+  <a href="#processus" onclick="toggleMenu()">Méthode</a>
+  <a href="#avis" onclick="toggleMenu()">Avis clients</a>
+  <a href="#garanties" onclick="toggleMenu()">Garanties</a>
+  <a href="tel:+33768955806" onclick="toggleMenu()">📞 07 68 95 58 06</a>
+  <a href="#contact" onclick="toggleMenu()" class="m-cta">Demander un devis gratuit</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-decor"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">Disponible immédiatement — Paris &amp; 150 km et plus</div>
+    <h1>Votre toiture<br>entre de<br><em>bonnes mains.</em></h1>
+    <p class="hero-desc">Particuliers, syndics, professionnels — LHDH Solutions intervient sur tous types de chantiers d'étanchéité avec rigueur, réactivité et respect strict des normes en vigueur.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Demander un devis
+      </a>
+      <a href="#prestations" class="btn btn-ghost">
+        Nos prestations
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-kpis">
+      <div><div class="kpi-n" id="kpi-exp">—</div><div class="kpi-l">Expérience terrain</div></div>
+      <div><div class="kpi-n">10<sup>+</sup></div><div class="kpi-l">Systèmes maîtrisés</div></div>
+      <div><div class="kpi-n">IDF<sup>et plus</sup></div><div class="kpi-l">Rayon intervention</div></div>
+      <div><div class="kpi-n">48<sup>h</sup></div><div class="kpi-l">Délai devis max</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card-wrap">
+      <div class="hero-float">
+        <div class="hero-float-n">48h</div>
+        <div class="hero-float-l">Devis gratuit</div>
+      </div>
+      <div class="hero-card">
+        <div class="hc-title">Nos domaines d'intervention</div>
+        <div class="hc-badges">
+          <div class="hc-badge">
+            <div class="hc-badge-icon"><svg viewBox="0 0 24 24"><path d="M3 18L12 5l9 13"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+            <div><div class="hc-badge-name">Charpente métallique</div><div class="hc-badge-sub">Bac acier, PVC, bac sec</div></div>
+          </div>
+          <div class="hc-badge">
+            <div class="hc-badge-icon"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="1"/><line x1="3" y1="13" x2="21" y2="13"/></svg></div>
+            <div><div class="hc-badge-name">Support béton</div><div class="hc-badge-sub">Bicouche, résine, végétalisation</div></div>
+          </div>
+          <div class="hc-badge">
+            <div class="hc-badge-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="3" rx="1"/><rect x="3" y="10" width="18" height="3" rx="1"/><rect x="3" y="15" width="18" height="3" rx="1"/></svg></div>
+            <div><div class="hc-badge-name">Support bois</div><div class="hc-badge-sub">Bicouche autoprotégée</div></div>
+          </div>
+          <div class="hc-badge">
+            <div class="hc-badge-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="hc-badge-name">Assurance décennale</div><div class="hc-badge-sub">+ RC pro — attestations sur demande</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BANNER ══ -->
+<div id="dispo">
+  <div class="dispo-txt">Disponible immédiatement sur toute la zone</div>
+  <a href="tel:+33768955806" class="dispo-item">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l.56-.56a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    <span>07 68 95 58 06</span>
+  </a>
+  <div class="dispo-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    <span>Devis sous 48h</span>
+  </div>
+</div>
+
+<!-- ══ ATOUTS ══ -->
+<section id="atouts" class="sec">
+  <div class="sec-head r">
+    <div>
+      <div class="label">Pourquoi LHDH</div>
+      <h2 class="sec-h">Ce qui nous distingue</h2>
+    </div>
+    <p class="sec-p">Particulier ou professionnel, vous avez besoin d'un spécialiste fiable, réactif et couvert. LHDH Solutions s'adapte à chaque situation avec le même niveau d'exigence.</p>
+  </div>
+  <div class="atouts-grid r r2">
+    <div class="atout">
+      <div class="atout-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="atout-t">Expertise au plus haut niveau</div>
+      <p class="atout-d">Savoir-faire forgé auprès des plus grands acteurs du secteur. Chaque technique maîtrisée dans les règles de l'art, de la terrasse individuelle au bâtiment industriel.</p>
+    </div>
+    <div class="atout">
+      <div class="atout-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div class="atout-t">Réactivité immédiate</div>
+      <p class="atout-d">Devis sous 48h, démarrage en 1 à 2 semaines. Structure agile, décision directe. Aucune couche hiérarchique entre votre demande et le responsable du chantier.</p>
+    </div>
+    <div class="atout">
+      <div class="atout-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="atout-t">Interlocuteur unique</div>
+      <p class="atout-d">Du devis à la réception, un seul contact connaît votre dossier, suit le chantier et répond à vos questions. Pas d'intermédiaire, communication directe.</p>
+    </div>
+    <div class="atout">
+      <div class="atout-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="atout-t">Couverture décennale</div>
+      <p class="atout-d">Assurance décennale et RC professionnelle en vigueur. Attestations transmises sur simple demande. Vos ouvrages sont protégés 10 ans après réception.</p>
+    </div>
+    <div class="atout">
+      <div class="atout-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+      <div class="atout-t">Devis détaillé & transparent</div>
+      <p class="atout-d">Métrés précis, chaque poste justifié. Matériaux, main-d'œuvre, évacuation — rien de caché. Zéro surprise à la facturation, engagement écrit.</p>
+    </div>
+    <div class="atout">
+      <div class="atout-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="atout-t">Zone étendue — 150 km et plus</div>
+      <p class="atout-d">Nous intervenons en Île-de-France ainsi que dans un rayon de 150 km autour de Paris pour les particuliers, avec une prise en charge rapide et sans frais cachés de déplacement. Pour les professionnels, nous opérons sans limite de distance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRESTATIONS ══ -->
+<section id="prestations" class="sec sec-alt">
+  <div class="sec-head r">
+    <div>
+      <div class="label">Nos prestations</div>
+      <h2 class="sec-h">Tous supports.<br>Toutes techniques.</h2>
+    </div>
+    <p class="sec-p">De la toiture de maison individuelle au bâtiment industriel, LHDH maîtrise l'intégralité des systèmes d'étanchéité pour répondre à tous les projets.</p>
+  </div>
+  <div class="prest-wrap r r2">
+    <div class="prest-tabs">
+      <div class="prest-tab on" onclick="switchPrest('metal',this)">
+        <svg viewBox="0 0 24 24"><path d="M3 18L12 5l9 13"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        Charpente métallique
+      </div>
+      <div class="prest-tab" onclick="switchPrest('beton',this)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="1"/><line x1="3" y1="13" x2="21" y2="13"/></svg>
+        Support béton
+      </div>
+      <div class="prest-tab" onclick="switchPrest('bois',this)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="3" rx="1"/><rect x="3" y="10" width="18" height="3" rx="1"/><rect x="3" y="15" width="18" height="3" rx="1"/></svg>
+        Support bois
+      </div>
+    </div>
+    <div id="pp-metal" class="prest-panel on">
+      <div class="pp-title">Charpente métallique</div>
+      <div class="pp-sub">Bâtiments industriels, entrepôts, ateliers — solutions haute performance sur structure métallique</div>
+      <div class="pp-list">
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Bac acier + isolant + membrane PVC</div><div class="pp-desc">Pose de bac acier support avec isolant fixé mécaniquement et membrane PVC soudée à l'air chaud. Performance thermique et étanchéité durables. Conforme DTU 43.3.</div></div></div>
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Bac sec + finitions complètes</div><div class="pp-desc">Pose de bac sec avec pièces de rive, chéneaux métalliques, relevés et raccords. Rendu propre, étanche, durable sur toutes configurations de toiture.</div></div></div>
+      </div>
+    </div>
+    <div id="pp-beton" class="prest-panel">
+      <div class="pp-title">Support béton</div>
+      <div class="pp-sub">Toitures-terrasses, parkings, ouvrages techniques — gamme complète sur béton</div>
+      <div class="pp-list">
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Bicouche bitumineuse autoprotégée</div><div class="pp-desc">Finition ardoisée ou granulés pour toitures inaccessibles. Solution éprouvée et économique. Conforme DTU 43.1.</div></div></div>
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Bicouche sous protection gravillonnée</div><div class="pp-desc">Membrane protégée par couche de gravillons roulés. Résistance mécanique et thermique renforcée.</div></div></div>
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Toiture végétalisée</div><div class="pp-desc">Système conçu pour substrat et végétation. Gestion eaux pluviales améliorée, isolation renforcée, esthétique verte.</div></div></div>
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Isolation inversée</div><div class="pp-desc">Isolant posé au-dessus de la membrane — protection contre les chocs thermiques. Technique premium pour durabilité maximale.</div></div></div>
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Dalles sur plots &amp; platelage bois</div><div class="pp-desc">Dalles béton ou céramique sur plots réglables, et platelages bois pour terrasses accessibles. Finition haut de gamme.</div></div></div>
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Couvertines &amp; résine de sol</div><div class="pp-desc">Couvertines métalliques sur acrotères et murets. Résines circulables et non circulables pour parkings et terrasses techniques.</div></div></div>
+      </div>
+    </div>
+    <div id="pp-bois" class="prest-panel">
+      <div class="pp-title">Support bois</div>
+      <div class="pp-sub">Maisons individuelles, extensions, constructions à ossature bois</div>
+      <div class="pp-list">
+        <div class="pp-item"><div class="pp-dot"></div><div><div class="pp-name">Bicouche bitumineuse autoprotégée sur bois</div><div class="pp-desc">Étanchéité bicouche adaptée aux supports bois avec préparation spécifique du support. Solution pérenne pour toitures plates. Conforme DTU 43.4.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESSUS ══ -->
+<section id="processus" class="sec sec-dark">
+  <div class="sec-head r">
+    <div>
+      <div class="label label-lt">Notre méthode</div>
+      <h2 class="sec-h lt">Du contact à la livraison</h2>
+    </div>
+    <p class="sec-p lt">Un processus en 5 étapes, clair et transparent. Zéro ambiguïté, un résultat conforme à vos attentes et aux normes en vigueur.</p>
+  </div>
+  <div class="process-grid r r2">
+    <div class="proc-step">
+      <div class="proc-circle"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l.56-.56a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <div class="proc-n">01</div><div class="proc-t">Contact</div>
+      <p class="proc-d">Réponse garantie sous 24h. Échange rapide pour cadrer votre besoin.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-circle"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="proc-n">02</div><div class="proc-t">Visite &amp; métrés</div>
+      <p class="proc-d">Déplacement sur site, diagnostic précis du support, métrés complets.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-circle"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+      <div class="proc-n">03</div><div class="proc-t">Devis détaillé</div>
+      <p class="proc-d">Chiffrage complet sous 48h. Chaque poste justifié. Zéro surprise.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-circle"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <div class="proc-n">04</div><div class="proc-t">Réalisation</div>
+      <p class="proc-d">Intervention personnelle, matériaux sélectionnés, respect strict des DTU.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-circle"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+      <div class="proc-n">05</div><div class="proc-t">Réception</div>
+      <p class="proc-d">Vérification contradictoire, levée des réserves, remise des documents.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GARANTIES ══ -->
+<section id="garanties" class="sec sec-alt">
+  <div class="sec-head r">
+    <div>
+      <div class="label">Sécurité &amp; garanties</div>
+      <h2 class="sec-h">Protégé du devis<br>à la décennale</h2>
+    </div>
+    <p class="sec-p">Chaque chantier LHDH est couvert par les assurances obligatoires. Attestations disponibles immédiatement sur demande.</p>
+  </div>
+  <div class="garanties-grid r r2">
+    <div class="garantie feat">
+      <div class="g-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="g-t">Assurance décennale</div>
+      <p class="g-d">10 ans de couverture sur tous les ouvrages réalisés. Garantit la solidité et l'étanchéité contre tout vice ou malfaçon après réception.</p>
+    </div>
+    <div class="garantie">
+      <div class="g-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+      <div class="g-t">Responsabilité civile pro</div>
+      <p class="g-d">Protection complète en cas de dommages causés à des tiers pendant les travaux. Couverture active sur toute la durée du chantier.</p>
+    </div>
+    <div class="garantie">
+      <div class="g-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div>
+      <div class="g-t">Conformité DTU</div>
+      <p class="g-d">Toutes les interventions respectent les DTU en vigueur (43.1, 43.3, 43.4). Conformité garantie pour vos réceptions et assurances maître d'ouvrage.</p>
+    </div>
+    <div class="garantie">
+      <div class="g-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 2v4M16 2v4M2 10h20"/></svg></div>
+      <div class="g-t">Documents sur demande</div>
+      <p class="g-d">Attestations d'assurance transmises immédiatement. SIRET : 93928455000018. Entreprise enregistrée, vérifiable et traçable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AVIS ══ -->
+<section id="avis" class="sec">
+  <div class="sec-head r">
+    <div>
+      <div class="label">Avis clients</div>
+      <h2 class="sec-h">Ils nous ont fait confiance</h2>
+    </div>
+    <p class="sec-p">Particuliers et professionnels satisfaits partout en Île-de-France et dans les départements limitrophes.</p>
+  </div>
+  <div class="avis-grid r r2">
+    <div class="avis-card">
+      <div class="avis-stars">★★★★★</div>
+      <p class="avis-txt">"Suite à une fuite active sur notre toiture-terrasse, LHDH est intervenu dans les 48h. Diagnostic précis, travaux soignés et plus aucun problème d'infiltration depuis. Sérieux et efficace, je recommande."</p>
+      <div class="avis-author">
+        <div class="avis-av">M</div>
+        <div><div class="avis-name">Marc D.</div><div class="avis-loc">Propriétaire — Vincennes (94)</div></div>
+      </div>
+      <div class="avis-tag">Étanchéité toiture-terrasse</div>
+    </div>
+    <div class="avis-card feat">
+      <div class="avis-stars">★★★★★</div>
+      <p class="avis-txt">"Très professionnel du début à la fin. Devis clair reçu en moins de 48h, chantier dans les délais annoncés. La réalisation est impeccable — dalles sur plots posées avec un soin remarquable. Je n'hésiterai pas à les rappeler."</p>
+      <div class="avis-author">
+        <div class="avis-av">S</div>
+        <div><div class="avis-name">Sylvie R.</div><div class="avis-loc">Syndic de copropriété — Boulogne (92)</div></div>
+      </div>
+      <div class="avis-tag">Terrasse accessible — Dalles sur plots</div>
+    </div>
+    <div class="avis-card">
+      <div class="avis-stars">★★★★★</div>
+      <p class="avis-txt">"Réfection complète de l'étanchéité de notre entrepôt — bac acier, isolant, membrane PVC. Tout dans les règles de l'art, un seul interlocuteur du début à la fin, suivi rigoureux. Une équipe compétente sur laquelle on peut compter."</p>
+      <div class="avis-author">
+        <div class="avis-av">T</div>
+        <div><div class="avis-name">Thomas B.</div><div class="avis-loc">Gérant — PME logistique, Marne-la-Vallée (77)</div></div>
+      </div>
+      <div class="avis-tag">Charpente métallique — Bac acier PVC</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;" class="r r3">
+    <a href="#contact" class="btn btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      Rejoignez nos clients — Devis gratuit
+    </a>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="r">
+      <div class="label">Contact &amp; devis</div>
+      <h2 class="sec-h">Votre projet mérite<br>un vrai spécialiste.</h2>
+      <p class="sec-p" style="margin-bottom:2.5rem">Particulier ou professionnel, décrivez votre chantier et recevez un devis gratuit et détaillé sous 48h.</p>
+      <div class="ci-list">
+        <div class="ci-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l.56-.56a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <div><div class="ci-l">Téléphone</div><div class="ci-v"><a href="tel:+33768955806">07 68 95 58 06</a></div></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+          <div><div class="ci-l">Email</div><div class="ci-v"><a href="mailto:louismignard974.93@gmail.com">louismignard974.93@gmail.com</a></div></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="ci-l">Zone</div><div class="ci-v">Paris-IDF &amp; Plus pour les entreprises</div></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 2v4M16 2v4M2 10h20"/></svg></div>
+          <div><div class="ci-l">SIRET</div><div class="ci-v">93928455000018</div></div>
+        </div>
+      </div>
+      <div class="assur-row">
+        <div class="assur-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Décennale</span></div>
+        <div class="assur-badge"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><span>RC Pro</span></div>
+        <div class="assur-badge"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg><span>DTU</span></div>
+      </div>
+    </div>
+    <div class="form-card r r2">
+      <div class="form-title">Devis gratuit</div>
+      <div class="form-sub">Réponse sous 48h — sans engagement</div>
+      <div class="form-row">
+        <div class="form-g"><label>Prénom</label><input type="text" placeholder="Jean"></div>
+        <div class="form-g"><label>Nom</label><input type="text" placeholder="Dupont"></div>
+      </div>
+      <div class="form-g"><label>Téléphone</label><input type="tel" placeholder="06 XX XX XX XX"></div>
+      <div class="form-g"><label>Email</label><input type="email" placeholder="jean@email.com"></div>
+      <div class="form-g"><label>Vous êtes ?</label>
+        <select>
+          <option value="">Sélectionnez…</option>
+          <option>Particulier — propriétaire</option>
+          <option>Syndic de copropriété</option>
+          <option>Gestionnaire de patrimoine</option>
+          <option>Entreprise / professionnel du bâtiment</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-g"><label>Type de projet</label>
+        <select>
+          <option value="">Sélectionnez…</option>
+          <optgroup label="Particuliers">
+            <option>Fuite active — intervention urgente</option>
+            <option>Toiture-terrasse maison individuelle</option>
+            <option>Terrasse / balcon accessible</option>
+            <option>Extension ou agrandissement</option>
+            <option>Rénovation toiture plate</option>
+          </optgroup>
+          <optgroup label="Copropriétés &amp; immeubles">
+            <option>Toiture-terrasse immeuble</option>
+            <option>Toiture végétalisée</option>
+            <option>Isolation inversée</option>
+            <option>Dalles sur plots / platelage bois</option>
+            <option>Couvertines &amp; acrotères</option>
+          </optgroup>
+          <optgroup label="Professionnels">
+            <option>Bâtiment industriel / charpente métallique</option>
+            <option>Résine de sol (parking, terrasse technique)</option>
+            <option>Réhabilitation de bâtiment</option>
+          </optgroup>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-g"><label>Surface estimée</label>
+          <select><option value="">Choisir…</option><option>Moins de 50 m²</option><option>50 à 150 m²</option><option>150 à 500 m²</option><option>Plus de 500 m²</option></select>
+        </div>
+        <div class="form-g"><label>Délai souhaité</label>
+          <select><option value="">Choisir…</option><option>Urgent (- 2 sem.)</option><option>1 à 2 mois</option><option>3 à 6 mois</option><option>Plus de 6 mois</option></select>
+        </div>
+      </div>
+      <div class="form-g"><label>Description</label><textarea rows="3" placeholder="Localisation, contexte, problème constaté…"></textarea></div>
+      <button class="form-submit" onclick="envoyerDevis(this)">Envoyer ma demande →</button>
+      <p class="form-note">🔒 Devis gratuit et sans engagement — données transmises uniquement à LHDH Solutions</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div>
+    <div class="footer-logo">
+      <svg width="18" height="23" viewBox="0 0 22 28" fill="none">
+        <path d="M11 0C11 0 0 10 0 17.5C0 23.3 4.9 28 11 28C17.1 28 22 23.3 22 17.5C22 10 11 0 11 0Z" fill="url(#gf)"/>
+        <defs><linearGradient id="gf" x1="11" y1="0" x2="11" y2="28" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#5BC0F5"/><stop offset="100%" stop-color="#1458A2"/></linearGradient></defs>
+      </svg>
+      <div>
+        <div class="footer-logo-name">LHDH</div>
+        <div class="footer-logo-sub">Solutions</div>
+      </div>
+    </div>
+    <div class="footer-info" style="margin-top:.5rem">
+      SIRET : 93928455000018 — Paris &amp; 150 km et plus<br>
+      Assurance décennale &amp; RC pro en vigueur
+    </div>
+  </div>
+  <div class="footer-links">
+    <a href="#atouts">Expertise</a>
+    <a href="#prestations">Prestations</a>
+    <a href="#processus">Méthode</a>
+    <a href="#garanties">Garanties</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Devis</a>
+  </div>
+  <div class="footer-info" style="text-align:right">
+    <a href="tel:+33768955806">07 68 95 58 06</a><br>
+    <a href="mailto:louismignard974.93@gmail.com">louismignard974.93@gmail.com</a>
+  </div>
+</footer>
+
+<!-- ══ FLOATING CTA ══ -->
+<a href="tel:+33768955806" class="float-cta" aria-label="Appeler LHDH Solutions">
+  <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l.56-.56a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+  07 68 95 58 06
+</a>
+
+<script>
+// Experience engine
+(function(){
+  var s=new Date('2022-06-01'),n=new Date();
+  var m=(n.getFullYear()-s.getFullYear())*12+(n.getMonth()-s.getMonth());
+  var r=Math.round(m/12*2)/2,i=Math.floor(r),h=(r%1!==0);
+  var el=document.getElementById('kpi-exp');
+  if(el)el.innerHTML=(h?i+',5':i)+'<sup>ans</sup>';
+})();
+
+// Scroll progress
+window.addEventListener('scroll',function(){
+  var p=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight);
+  document.getElementById('progress').style.transform='scaleX('+Math.min(p,1)+')';
+});
+
+// Reveal on scroll
+var obs=new IntersectionObserver(function(e){
+  e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('on');});
+},{threshold:.1});
+document.querySelectorAll('.r').forEach(function(el){obs.observe(el);});
+
+// Prestations tabs
+function switchPrest(id,btn){
+  document.querySelectorAll('.prest-panel').forEach(function(c){c.classList.remove('on');});
+  document.querySelectorAll('.prest-tab').forEach(function(b){b.classList.remove('on');});
+  document.getElementById('pp-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// Mobile menu
+function toggleMenu(){
+  var m=document.getElementById('mmenu');
+  m.style.display=(m.style.display==='flex')?'none':'flex';
+}
+
+// Form → mailto
+function envoyerDevis(btn){
+  var inputs=document.querySelectorAll('.form-card input');
+  var prenom=inputs[0]?.value||'';
+  var nom=inputs[1]?.value||'';
+  var tel=inputs[2]?.value||'';
+  var email=inputs[3]?.value||'';
+  var selects=document.querySelectorAll('.form-card select');
+  var profil=selects[0]?.value||'';
+  var projet=selects[1]?.value||'';
+  var surface=selects[2]?.value||'';
+  var delai=selects[3]?.value||'';
+  var desc=document.querySelector('.form-card textarea')?.value||'';
+  if(!prenom||!tel||!projet){alert('Merci de renseigner votre prénom, téléphone et type de projet.');return;}
+  var s=encodeURIComponent('Demande de devis LHDH Solutions — '+prenom+' '+nom);
+  var b=encodeURIComponent(
+    'DEMANDE DE DEVIS — LHDH SOLUTIONS\n=====================================\n\n'+
+    'COORDONNÉES\n-----------\n'+
+    'Nom       : '+prenom+' '+nom+'\n'+
+    'Téléphone : '+tel+'\n'+
+    'Email     : '+email+'\n\n'+
+    'PROJET\n------\n'+
+    'Profil    : '+profil+'\n'+
+    'Type      : '+projet+'\n'+
+    'Surface   : '+surface+'\n'+
+    'Délai     : '+delai+'\n\n'+
+    'DESCRIPTION\n-----------\n'+desc+'\n\n'+
+    '=====================================\nEnvoyé depuis lhdh-solutions.fr'
+  );
+  window.location.href='mailto:louismignard974.93@gmail.com?subject='+s+'&body='+b;
+  btn.textContent='✓ Messagerie ouverte — vérifiez votre email';
+  btn.style.background='#1458A2';
+  setTimeout(function(){btn.disabled=true;},2000);
+}
+</script>
+</body>
+</html>
