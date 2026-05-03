@@ -782,8 +782,12 @@ footer {
   .atouts-grid { grid-template-columns: 1fr; }
   .process-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  /* Panels padding réduit sur mobile */
+  /* Hero : padding latéral réduit, le contenu prend toute la largeur */
+  #hero { padding: 100px 4vw 60px; }
+  .hero-left { width: 100%; }
+  /* Prestations : panel sans débordement latéral */
   .prest-panel { padding: 1.2rem; }
+  .prest-wrap { overflow: hidden; }
   /* Barre dispo */
   #dispo { gap: .7rem; padding: .8rem 4vw; }
   .dispo-txt { font-size: .85rem; text-align: center; }
