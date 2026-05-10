@@ -1907,7 +1907,7 @@ function envoyerDevis(btn){
     pdfBase64='';
   }
 
-  // ── Envoi EmailJS ──
+  // ── Envoi EmailJS (sans PDF en piece jointe) ──
   var templateParams={
     from_name: prenom+' '+nom,
     from_email: email||'non renseigne',
@@ -1917,8 +1917,7 @@ function envoyerDevis(btn){
     surface: surface||'non renseignee',
     delai: delai||'non renseigne',
     description: desc||'Aucune description fournie.',
-    date_envoi: dateStr,
-    pdf_base64: pdfBase64
+    date_envoi: dateStr
   };
 
   emailjs.send('LhdhSolutions','template_sosucx5',templateParams)
