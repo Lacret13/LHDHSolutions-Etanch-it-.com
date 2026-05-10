@@ -1805,14 +1805,34 @@ function envoyerDevis(btn){
 
       doc.setFillColor(15,32,64);
       doc.rect(0,0,W,46,'F');
+
+      // Logo goutte d'eau dessiné sur canvas puis inséré comme image
+      var logoCanvas = document.createElement('canvas');
+      logoCanvas.width = 44; logoCanvas.height = 56;
+      var lctx = logoCanvas.getContext('2d');
+      var grad = lctx.createLinearGradient(22,0,22,56);
+      grad.addColorStop(0,'#5BC0F5'); grad.addColorStop(1,'#1458A2');
+      lctx.fillStyle = grad;
+      lctx.beginPath();
+      lctx.moveTo(22,0);
+      lctx.bezierCurveTo(22,0,0,20,0,35);
+      lctx.bezierCurveTo(0,46.6,9.8,56,22,56);
+      lctx.bezierCurveTo(34.2,56,44,46.6,44,35);
+      lctx.bezierCurveTo(44,20,22,0,22,0);
+      lctx.fill();
+      lctx.strokeStyle='rgba(255,255,255,0.5)'; lctx.lineWidth=3; lctx.lineCap='round';
+      lctx.beginPath(); lctx.moveTo(14,36); lctx.quadraticCurveTo(18,26,22,22); lctx.stroke();
+      var logoDataUrl = logoCanvas.toDataURL('image/png');
+      doc.addImage(logoDataUrl,'PNG',pad,7,9,11.5);
+
       doc.setTextColor(255,255,255);
       doc.setFont('helvetica','bold');
       doc.setFontSize(22);
-      doc.text('LHDH SOLUTIONS',pad,18);
+      doc.text('LHDH SOLUTIONS',pad+12,15);
       doc.setFontSize(7.5);
       doc.setFont('helvetica','normal');
       doc.setTextColor(138,150,168);
-      doc.text('ETANCHEITE — TOITURE-TERRASSE — RESINE — ILE-DE-FRANCE',pad,26);
+      doc.text('ETANCHEITE — TOITURE-TERRASSE — RESINE — ILE-DE-FRANCE',pad+12,22);
 
       doc.setFillColor(217,119,6);
       doc.roundedRect(W-72,8,54,14,3,3,'F');
