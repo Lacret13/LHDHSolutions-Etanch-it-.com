@@ -1777,159 +1777,160 @@ function toggleSysteme(id) {
 // Form → EmailJS + PDF
 function envoyerDevis(btn){
   var inputs=document.querySelectorAll('.form-card input');
-  var prenom=inputs[0]?.value||'';
-  var nom=inputs[1]?.value||'';
-  var tel=inputs[2]?.value||'';
-  var email=inputs[3]?.value||'';
+  var prenom=inputs[0]?.value.trim()||'';
+  var nom=inputs[1]?.value.trim()||'';
+  var tel=inputs[2]?.value.trim()||'';
+  var email=inputs[3]?.value.trim()||'';
   var selects=document.querySelectorAll('.form-card select');
   var profil=selects[0]?.value||'';
   var projet=selects[1]?.value||'';
   var surface=selects[2]?.value||'';
   var delai=selects[3]?.value||'';
-  var desc=document.querySelector('.form-card textarea')?.value||'';
+  var desc=document.querySelector('.form-card textarea')?.value.trim()||'';
   if(!prenom||!projet){alert('Merci de renseigner votre prénom et type de projet.');return;}
 
   btn.disabled=true;
   btn.innerHTML='⏳ Envoi en cours…';
 
-  // ── Génération PDF ──
-  var jsPDF=window.jspdf.jsPDF;
-  var doc=new jsPDF({unit:'mm',format:'a4'});
-  var W=210, pad=18, y=0;
-
-  // Bande header bleu marine
-  doc.setFillColor(15,32,64);
-  doc.rect(0,0,W,38,'F');
-
-  // Logo texte
-  doc.setTextColor(255,255,255);
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(22);
-  doc.text('LHDH SOLUTIONS',pad,18);
-  doc.setFontSize(7.5);
-  doc.setFont('helvetica','normal');
-  doc.setTextColor(138,150,168);
-  doc.text('ÉTANCHÉITÉ — TOITURE-TERRASSE — RÉSINE — ÎLE-DE-FRANCE',pad,25);
-
-  // Badge "DEMANDE DE DEVIS"
-  doc.setFillColor(217,119,6);
-  doc.roundedRect(W-70,8,52,14,3,3,'F');
-  doc.setTextColor(255,255,255);
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(8);
-  doc.text('DEMANDE DE DEVIS',W-44,16.5,{align:'center'});
-
-  // Date
-  doc.setFont('helvetica','normal');
-  doc.setFontSize(7.5);
-  doc.setTextColor(138,150,168);
   var now=new Date();
-  doc.text('Reçu le '+now.toLocaleDateString('fr-FR')+' à '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),W-44,23,{align:'center'});
+  var dateStr=now.toLocaleDateString('fr-FR')+' à '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
 
-  y=50;
+  // ── Génération PDF ──
+  var pdfBase64='';
+  try {
+    if(window.jspdf && window.jspdf.jsPDF){
+      var jsPDF=window.jspdf.jsPDF;
+      var doc=new jsPDF({unit:'mm',format:'a4'});
+      var W=210, pad=18, y=0;
 
-  // ── Section helper ──
-  function section(titre){
-    doc.setFillColor(238,241,245);
-    doc.rect(pad,y,W-pad*2,8,'F');
-    doc.setDrawColor(221,226,234);
-    doc.rect(pad,y,W-pad*2,8,'S');
-    doc.setTextColor(27,111,202);
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(8);
-    doc.text(titre.toUpperCase(),pad+3,y+5.5);
-    y+=12;
+      doc.setFillColor(15,32,64);
+      doc.rect(0,0,W,38,'F');
+      doc.setTextColor(255,255,255);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(22);
+      doc.text('LHDH SOLUTIONS',pad,18);
+      doc.setFontSize(7.5);
+      doc.setFont('helvetica','normal');
+      doc.setTextColor(138,150,168);
+      doc.text('ETANCHEITE — TOITURE-TERRASSE — RESINE — ILE-DE-FRANCE',pad,25);
+
+      doc.setFillColor(217,119,6);
+      doc.roundedRect(W-70,8,52,14,3,3,'F');
+      doc.setTextColor(255,255,255);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(8);
+      doc.text('DEMANDE DE DEVIS',W-44,16.5,{align:'center'});
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(138,150,168);
+      doc.text('Recu le '+dateStr,W-44,23,{align:'center'});
+
+      y=50;
+
+      function section(titre){
+        doc.setFillColor(238,241,245);
+        doc.rect(pad,y,W-pad*2,8,'F');
+        doc.setDrawColor(221,226,234);
+        doc.rect(pad,y,W-pad*2,8,'S');
+        doc.setTextColor(27,111,202);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(8);
+        doc.text(titre.toUpperCase(),pad+3,y+5.5);
+        y+=12;
+      }
+
+      function ligne(label,val){
+        if(!val) return;
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(8.5);
+        doc.setTextColor(138,150,168);
+        doc.text(label,pad,y);
+        doc.setFont('helvetica','normal');
+        doc.setTextColor(26,34,46);
+        doc.text(String(val),pad+42,y);
+        y+=7;
+      }
+
+      section('Coordonnees du demandeur');
+      ligne('Nom complet',prenom+' '+nom);
+      ligne('Telephone',tel||'Non renseigne');
+      ligne('Email',email||'Non renseigne');
+      ligne('Profil',profil||'Non renseigne');
+      y+=3;
+
+      section('Details du projet');
+      ligne('Type de projet',projet);
+      ligne('Surface estimee',surface||'Non renseignee');
+      ligne('Delai souhaite',delai||'Non renseigne');
+      y+=3;
+
+      if(desc){
+        section('Description complementaire');
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(8.5);
+        doc.setTextColor(26,34,46);
+        var lines=doc.splitTextToSize(desc.substring(0,400), W-pad*2-6);
+        doc.text(lines,pad+3,y);
+        y+=lines.length*5.5+6;
+      }
+
+      y+=2;
+      doc.setFillColor(232,242,252);
+      doc.setDrawColor(27,111,202);
+      doc.roundedRect(pad,y,W-pad*2,22,3,3,'FD');
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(15,32,64);
+      doc.text('Engagement LHDH Solutions',pad+5,y+7);
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(8);
+      doc.setTextColor(74,90,120);
+      doc.text('Vous recevrez une reponse et un devis detaille sous 48h.',pad+5,y+13);
+      doc.text('Contact : lhdhsolutions@hotmail.com',pad+5,y+19);
+
+      doc.setFillColor(15,32,64);
+      doc.rect(0,282,W,15,'F');
+      doc.setTextColor(138,150,168);
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(7);
+      doc.text('LHDH Solutions — Etancheite Ile-de-France — lhdh-solutions.fr',W/2,290,{align:'center'});
+
+      var raw=doc.output('datauristring').split(',')[1];
+      // EmailJS limite à ~50KB en base64 — on n'inclut le PDF que s'il passe
+      pdfBase64 = (raw.length < 45000) ? raw : '';
+
+      // Téléchargement côté client dans tous les cas
+      doc.save('Devis-LHDH-Solutions-'+prenom+'-'+nom+'.pdf');
+    }
+  } catch(pdfErr){
+    console.warn('PDF generation error:', pdfErr);
+    pdfBase64='';
   }
-
-  function ligne(label,val){
-    if(!val) return;
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(8.5);
-    doc.setTextColor(138,150,168);
-    doc.text(label,pad,y);
-    doc.setFont('helvetica','normal');
-    doc.setTextColor(26,34,46);
-    doc.text(val||'—',pad+42,y);
-    y+=7;
-  }
-
-  // ── COORDONNÉES ──
-  section('Coordonnées du demandeur');
-  ligne('Nom complet',prenom+' '+nom);
-  ligne('Téléphone',tel||'Non renseigné');
-  ligne('Email',email||'Non renseigné');
-  ligne('Profil',profil);
-  y+=3;
-
-  // ── PROJET ──
-  section('Détails du projet');
-  ligne('Type de projet',projet);
-  ligne('Surface estimée',surface||'Non renseignée');
-  ligne('Délai souhaité',delai||'Non renseigné');
-  y+=3;
-
-  // ── DESCRIPTION ──
-  if(desc){
-    section('Description complémentaire');
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(8.5);
-    doc.setTextColor(26,34,46);
-    var lines=doc.splitTextToSize(desc, W-pad*2-6);
-    doc.text(lines,pad+3,y);
-    y+=lines.length*5.5+6;
-  }
-
-  // ── Encadré récap ──
-  y+=2;
-  doc.setFillColor(232,242,252);
-  doc.setDrawColor(27,111,202);
-  doc.roundedRect(pad,y,W-pad*2,22,3,3,'FD');
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(8.5);
-  doc.setTextColor(15,32,64);
-  doc.text('Engagement LHDH Solutions',pad+5,y+7);
-  doc.setFont('helvetica','normal');
-  doc.setFontSize(8);
-  doc.setTextColor(74,90,120);
-  doc.text('Vous recevrez une réponse et un devis détaillé sous 48h.',pad+5,y+13);
-  doc.text('Contact : lhdhsolutions@hotmail.com',pad+5,y+19);
-
-  // ── Footer ──
-  doc.setFillColor(15,32,64);
-  doc.rect(0,282,W,15,'F');
-  doc.setTextColor(138,150,168);
-  doc.setFont('helvetica','normal');
-  doc.setFontSize(7);
-  doc.text('LHDH Solutions — Étanchéité Île-de-France — lhdh-solutions.fr — lhdhsolutions@hotmail.com',W/2,290,{align:'center'});
-
-  var pdfBase64=doc.output('datauristring').split(',')[1];
 
   // ── Envoi EmailJS ──
   var templateParams={
     from_name: prenom+' '+nom,
-    from_email: email||'non renseigné',
-    telephone: tel||'non renseigné',
-    profil: profil||'non renseigné',
+    from_email: email||'non renseigne',
+    telephone: tel||'non renseigne',
+    profil: profil||'non renseigne',
     projet: projet,
-    surface: surface||'non renseignée',
-    delai: delai||'non renseigné',
+    surface: surface||'non renseignee',
+    delai: delai||'non renseigne',
     description: desc||'Aucune description fournie.',
-    date_envoi: now.toLocaleDateString('fr-FR')+' à '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+    date_envoi: dateStr,
     pdf_base64: pdfBase64
   };
 
   emailjs.send('LhdhSolutions','template_sosucx5',templateParams)
     .then(function(){
-      btn.innerHTML='✓ Demande envoyée — réponse sous 48h';
+      btn.innerHTML='✓ Demande envoyee — reponse sous 48h';
       btn.style.background='#1458A2';
-      // Téléchargement PDF pour le client
-      doc.save('Devis-LHDH-Solutions-'+prenom+'-'+nom+'.pdf');
     })
     .catch(function(err){
-      console.error('EmailJS error',err);
+      console.error('EmailJS error', JSON.stringify(err));
       btn.disabled=false;
       btn.innerHTML='Envoyer ma demande →';
-      alert('Erreur lors de l\'envoi. Merci de nous contacter directement à lhdhsolutions@hotmail.com');
+      alert('Erreur lors de l\'envoi (code: '+(err.status||err.text||'inconnu')+'). Merci de nous contacter directement a lhdhsolutions@hotmail.com');
     });
 }
 </script>
