@@ -1130,10 +1130,11 @@ footer {
 </section>
 
 <!-- ══ SYSTÈMES MAÎTRISÉS ══ -->
-<section id="systemes" class="sec sec-alt">
+<div id="prestations" style="position:relative;top:-80px;visibility:hidden;pointer-events:none;"></div>
+<section id="systemes" class="sec sec-alt" data-anchor="prestations">
   <div class="sec-head r">
     <div>
-      <div class="label">Savoir-faire technique</div>
+      <div class="label">Prestations</div>
       <h2 class="sec-h">Systèmes maîtrisés<br>par support</h2>
     </div>
     <p class="sec-p">Chaque support nécessite une approche spécifique. Cliquez sur un support pour découvrir les systèmes que nous mettons en œuvre, conformément aux DTU en vigueur.</p>
@@ -1919,8 +1920,10 @@ function envoyerDevis(btn){
       // EmailJS limite à ~50KB en base64 — on n'inclut le PDF que s'il passe
       pdfBase64 = (raw.length < 45000) ? raw : '';
 
-      // Téléchargement côté client dans tous les cas
-      doc.save('Devis-LHDH-Solutions-'+prenom+'-'+nom+'.pdf');
+      // Ouverture du PDF dans un nouvel onglet
+      var pdfBlob = doc.output('blob');
+      var pdfUrl = URL.createObjectURL(pdfBlob);
+      window.open(pdfUrl, '_blank');
     }
   } catch(pdfErr){
     console.warn('PDF generation error:', pdfErr);
@@ -1949,7 +1952,13 @@ function envoyerDevis(btn){
       console.error('EmailJS error', JSON.stringify(err));
       btn.disabled=false;
       btn.innerHTML='Envoyer ma demande →';
-      alert('Erreur lors de l\'envoi (code: '+(err.status||err.text||'inconnu')+'). Merci de nous contacter directement a lhdhsolutions@hotmail.com');
+      var code = err.status || err.text || 'inconnu';
+      var detail = '';
+      if(err.status === 400) detail = ' — Paramètres invalides (vérifiez le template EmailJS)';
+      else if(err.status === 401 || err.status === 403) detail = ' — Clé API ou Service ID non autorisé';
+      else if(err.status === 404) detail = ' — Service ou Template introuvable sur EmailJS';
+      else if(err.status === 422) detail = ' — Variable manquante dans le template EmailJS';
+      alert('Erreur lors de l\'envoi (code: '+code+detail+'). Merci de nous contacter directement à lhdhsolutions@hotmail.com');
     });
 }
 </script>
